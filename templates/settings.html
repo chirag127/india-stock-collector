@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% block body %}
+<h1>Settings &amp; data health</h1>
+{% if msg %}<p><b>{{ msg }}</b></p>{% endif %}
+<p>Broker: <b>{{ broker }}</b> · AMO support: <b>{{ amo }}</b> (default off until docs/account verified)</p>
+<form method="post" action="/settings">
+<label>Price ceiling ₹<input name="price_ceiling_inr" value="{{ s.price_ceiling_inr }}" size="8"></label>
+<label>Qty<input name="default_quantity" value="{{ s.default_quantity }}" size="4"></label>
+<label>Slippage %<input name="max_slippage_pct" value="{{ s.max_slippage_pct }}" size="5"></label>
+<label>Buffer %<input name="safety_buffer_pct" value="{{ s.safety_buffer_pct }}" size="5"></label><br>
+<label>Per-order cap ₹<input name="per_order_cap_inr" value="{{ s.per_order_cap_inr }}" size="10"></label>
+<label>Per-batch cap ₹<input name="per_batch_cap_inr" value="{{ s.per_batch_cap_inr }}" size="10"></label>
+<label>Per-day cap ₹<input name="per_day_cap_inr" value="{{ s.per_day_cap_inr }}" size="10"></label><br>
+<label>Session<input name="session_start" value="{{ s.session_start }}" size="6">–<input name="session_end" value="{{ s.session_end }}" size="6"> IST</label>
+<label>Paper funds ₹<input name="paper_funds" value="{{ s.paper_funds }}" size="10"></label><br>
+<button>Save (local only)</button></form>
+<form method="post" action="/kill"><button>{{ 'Release kill switch' if kill_on else 'ENGAGE KILL SWITCH' }}</button></form>
+<h2>Sources</h2>
+<table><tr><th>Source</th><th>Retrieved (UTC)</th><th>Checksum</th><th>Last good</th></tr>
+{% for r in snapshots %}<tr><td class="small">{{ r.source_name }}<br>{{ r.source_url }}</td><td>{{ r.retrieved_at }}</td>
+<td class="small">{{ r.checksum }}</td><td>{{ r.is_last_known_good }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

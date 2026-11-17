@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · India Stock Collector</title>
+<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+<style>
+body{font-family:system-ui,sans-serif;max-width:1080px;margin:0 auto;padding:1rem;color:#1a1a1a}
+nav{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+nav a{padding:.3rem .6rem;border:1px solid #ccc;border-radius:6px;text-decoration:none;color:#0b4da2}
+.badge{display:inline-block;padding:.1rem .5rem;border-radius:999px;font-size:.8rem}
+.paper{background:#e8f5e9}.live{background:#ffebee}.kill{background:#ffcdd2}.ok{background:#e8f5e9}.warn{background:#fff3e0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid #ddd;padding:.35rem .5rem;text-align:left}
+.muted{color:#666}.small{font-size:.82rem}
+.alert{border:1px solid #c00;background:#fdecea;padding:.6rem;border-radius:6px}
+form.inline{display:inline}
+input,select,button{padding:.3rem .5rem;margin:.15rem}
+footer{margin-top:2rem;color:#666;font-size:.8rem}
+</style>
+</head>
+<body>
+<nav>
+<a href="/">Overview</a><a href="/universe">Universe</a><a href="/queue">Queue</a>
+<a href="/review">Order review</a><a href="/simulator">Simulator</a><a href="/orders">Orders &amp; holdings</a>
+<a href="/contacts">Contacts</a><a href="/settings">Settings</a>
+</nav>
+{% if kill_on %}<p class="badge kill">KILL SWITCH ON — new live orders disabled</p>{% endif %}
+{% block body %}{% endblock %}
+<footer class="muted">Collecting &amp; learning tool. Not investment advice. No profit / no-loss / liquidity claims.</footer>
+</body>
+</html>

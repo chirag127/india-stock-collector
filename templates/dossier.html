@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block body %}
+<h1>{{ company.name }}</h1>
+<p class="small muted">{{ company.isin }} · {{ company.sector }} / {{ company.industry }} · {{ company.status }}</p>
+<h2>Listings</h2>
+<ul>{% for s in securities %}<li>{{ s.exchange }}:{{ s.tsym }} ({{ s.symbol }})</li>{% endfor %}</ul>
+<h2>Filings &amp; annual reports (links only, no bulk download)</h2>
+<ul>{% for f in filings %}<li><a href="{{ f.filing_url }}">{{ f.title }}</a> <span class="muted small">{{ f.filed_on }}</span></li>{% endfor %}
+{% for a in reports %}<li>AR {{ a.financial_year }}: <a href="{{ a.report_url }}">{{ a.report_url }}</a></li>{% endfor %}</ul>
+<h2>Investor contacts</h2>
+<table><tr><th>Kind</th><th>Name</th><th>Email</th><th>Verified</th><th>Source</th></tr>
+{% for c in contacts %}<tr><td>{{ c.kind }}</td><td>{{ c.name }}</td><td>{{ c.email }}</td>
+<td>{{ 'yes' if c.verified else 'no' }}</td><td class="small">{{ c.source_url }}</td></tr>{% endfor %}
+</table>
+<h2>Physical annual-report request draft</h2>
+<form method="post" action="/company/{{ company.id }}/draft">
+<input name="fy" placeholder="FY e.g. 2024-25" value="2024-25"><button>Generate editable draft</button></form>
+{% for d in drafts %}<pre>{{ d.draft_text }}</pre>
+<a href="mailto:?subject={{ ('Annual report request '|urlencode) }}{{ company.isin }}&body={{ d.draft_text|urlencode }}">Open mailto draft</a>{% endfor %}
+<p class="muted small">Verify shareholding and send each request personally. No automatic sending.</p>
+{% endblock %}

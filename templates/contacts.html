@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}
+<h1>Contacts</h1>
+<p class="muted small">Provenance-backed only. Select recipients explicitly; export copies selected verified emails to CSV. No sending.</p>
+<form method="get"><input name="q" value="{{ q }}" placeholder="search"><button>Search</button></form>
+<form method="post" action="/contacts/verify" class="inline"><input name="contact_id" placeholder="id" size="6"><button>Toggle verified</button></form>
+<form method="get" action="/contacts/export" class="inline"><input name="ids" placeholder="ids e.g. 1,2" size="12"><button>Export selected CSV</button></form>
+<table><tr><th>ID</th><th>Company</th><th>Kind</th><th>Email</th><th>Verified</th><th>Source</th></tr>
+{% for c in contacts %}<tr><td>{{ c.id }}</td><td>{{ c.company }}</td><td>{{ c.kind }}</td>
+<td>{{ c.email }}</td><td>{{ 'yes' if c.verified else 'no' }}</td><td class="small">{{ c.source_url }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}
+<h1>Overview</h1>
+<p>Mode: <span class="badge {{ 'live' if live else 'paper' }}">{{ 'LIVE-ARMED' if live else 'PAPER' }}</span>
+Holdings: <b>{{ holdings }}</b> · Queue intents: <b>{{ queue }}</b> · Funds ₹{{ funds }} · Reserved ₹{{ reserved }}</p>
+<p class="small muted">Data freshness: {{ freshness }} · Calendar: {{ calendar }} · Fee schedule: {{ fees }}</p>
+{% if blockers %}<div class="alert small">Live blocked: {{ blockers|join('; ') }}</div>{% endif %}
+<h2>Audit (latest)</h2>
+<table><tr><th>At (UTC)</th><th>Kind</th><th>Detail</th></tr>
+{% for e in events %}<tr><td>{{ e.at }}</td><td>{{ e.kind }}</td><td>{{ e.detail }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

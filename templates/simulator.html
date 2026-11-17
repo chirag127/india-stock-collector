@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block body %}
+<h1>Simulator</h1>
+<form method="post" action="/simulator/reset" class="inline"><button>Reset simulated runs</button></form>
+<table><tr><th>Intent</th><th>Fill</th><th>Broker ref</th></tr>
+{% for r in runs %}<tr><td class="small">{{ r.intent }}</td><td>{{ r.qty }} @ {{ r.price }}</td><td>{{ r.ref }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

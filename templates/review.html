@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block body %}
+<h1>Order review</h1>
+<p class="muted small">One approval screen. Nothing submits on page load. Live needs typed phrase, open session, guardrails, kill-switch off.</p>
+{% if msg %}<p><b>{{ msg }}</b></p>{% endif %}
+{% if blockers %}<div class="alert small">Blocked: {{ blockers|join('; ') }}</div>{% endif %}
+<table><tr><th>Intent</th><th>Symbol</th><th>Qty@Limit</th><th>All-in</th><th>Status</th></tr>
+{% for i in intents %}<tr><td class="small">{{ i.public_id }}</td><td>{{ i.tsym }}</td>
+<td>{{ i.quantity }} @ {{ i.limit_price }}</td><td>₹{{ i.total }}</td><td>{{ i.status }}</td></tr>{% endfor %}
+</table>
+<form method="post" action="/review/live">
+<label>Type confirmation phrase to submit pending paper-reviewed LIVE batch (CNC limit only):</label><br>
+<input name="phrase" size="40" autocomplete="off"><button>Submit live batch</button>
+</form>
+{% endblock %}

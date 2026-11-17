@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}
+<h1>Universe</h1>
+<form method="get"><input name="q" value="{{ q }}" placeholder="filter name/symbol/isin">
+<select name="f"><option value="">all</option><option value="eligible" {% if f=='eligible' %}selected{% endif %}>eligible</option><option value="excluded" {% if f=='excluded' %}selected{% endif %}>excluded</option></select>
+<button>Filter</button></form>
+<table><tr><th>Company</th><th>ISIN</th><th>Venue</th><th>Eligible</th><th>Reason</th></tr>
+{% for r in rows %}<tr><td><a href="/company/{{ r.company.id }}">{{ r.company.name }}</a></td>
+<td>{{ r.company.isin }}</td><td>{{ r.venue }}</td>
+<td>{{ 'yes' if r.eligible else 'no' }}</td><td class="small">{{ r.reason }}</td></tr>{% endfor %}
+</table>
+{% endblock %}

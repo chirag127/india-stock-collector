@@ -1,0 +1,45 @@
+[project]
+name = "india-stock-collector"
+version = "0.1.0"
+description = "Private local-first dashboard for collecting/learning about low-priced Indian equities. Paper-trading-first; Shoonya live orders behind explicit safeguards."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "jinja2>=3.1",
+  "sqlalchemy>=2.0",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.4",
+  "httpx>=0.27",
+  "python-multipart>=0.0.9",
+  "pyyaml>=6.0",
+  "tzdata>=2024.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "httpx>=0.27"]
+dev = ["ruff>=0.5", "mypy>=1.11"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+"app/main.py" = ["B008"]  # Depends() in defaults is the FastAPI idiom
+"app/broker.py" = ["BLE001"]  # broker transport errors are ambiguous by design
+"app/jobs.py" = ["BLE001"]  # offline must fall back to last-known-good
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block body %}
+<h1>Orders &amp; holdings</h1>
+<h2>Holdings (distinct companies)</h2>
+<table><tr><th>Company</th><th>Qty</th><th>Avg</th></tr>
+{% for h in holdings %}<tr><td>{{ h.name }}</td><td>{{ h.qty }}</td><td>{{ h.avg }}</td></tr>{% endfor %}
+</table>
+<h2>Audit trail (immutable)</h2>
+<table><tr><th>Intent</th><th>Mode</th><th>Status</th><th>Broker</th><th>Reconciled</th></tr>
+{% for o in orders %}<tr><td class="small">{{ o.intent }}</td><td>{{ o.mode }}</td><td>{{ o.status }}</td>
+<td class="small">{{ o.ref }}</td><td>{{ o.rec }}</td></tr>{% endfor %}
+</table>
+<p class="muted small">Filled is shown only after broker/simulator confirmation is reconciled.</p>
+{% endblock %}

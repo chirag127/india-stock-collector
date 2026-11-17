@@ -1,3 +1,16 @@
+# India Stock Collector — secrets & private data (aggressive, see agent.md)
+.env
+cred.yml
+*.db
+*.db-journal
+data/
+exports/
+logs/
+tokens/
+contact-exports/
+*.csv
+!fixtures/*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

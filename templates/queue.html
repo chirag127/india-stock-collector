@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<h1>Candidate queue</h1>
+<form method="post" action="/queue/build" class="inline"><button>Rebuild candidates</button></form>
+<form method="post" action="/queue/paper-run" class="inline"><button>Run paper simulation</button></form>
+<table><tr><th>Company</th><th>Venue</th><th>Ask</th><th>Limit</th><th>All-in est.</th><th>Reserve</th><th>Note</th></tr>
+{% for c in cands %}<tr><td>{{ c.company.name }}</td><td>{{ c.security.exchange }}:{{ c.security.tsym }}</td>
+<td>{{ c.quote.ask }}</td><td>{{ c.price }}</td><td>₹{{ c.cost.total }} ({{ c.cost.schedule_version }})</td>
+<td>₹{{ c.reserve_total }}</td><td class="small">{{ c.price_note }}</td></tr>{% endfor %}
+</table>
+<h2>Intents</h2>
+<table><tr><th>ID</th><th>Mode</th><th>Status</th><th>Qty@Limit</th><th>Remarks</th></tr>
+{% for i in intents %}<tr><td class="small">{{ i.public_id }}</td><td>{{ i.mode }}</td><td>{{ i.status }}</td>
+<td>{{ i.quantity }} @ {{ i.limit_price }}</td><td class="small">{{ i.remarks }}</td></tr>{% endfor %}
+</table>
+{% endblock %}
